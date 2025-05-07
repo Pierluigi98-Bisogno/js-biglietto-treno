@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biglietto del Treno</title>
+</head>
+
+<body>
+    <div>
+        <imput type="number" id="km" min="1" step="1" placeholder="Numero di km da percorrere" required>
+    </div>
+    <div><input type="number" id="eta" min="1" max="120" step="1" placeholder="Età del passeggero" required></div>
+    <button id="calcola">Calcola</button><br>
+    <div id="risultato"></div>
+    <h2>Dettaglio Biglietto</h2>
+    <p>Km : <span id="km-output"></span></p>
+    <p>Prezzo : <span id="prezzo-output"></span> €</p>
+    <p>eta : <span id="eta-output"></span></p>
+    <p>Prezzo scontato : <span id="prezzo-scontato-output"></span></p>
+    <p>Prezzo totale : <span id="prezzo-totale-output"></span> €</p>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,47 +1,42 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const km = document.getElementById("km");
-    const eta = document.getElementById("eta");
-    const calcola = document.getElementById("calcola");
-    const risultato = document.getElementById("risultato");
-    const kmoutput = document.getElementById("km-output");
-    const etaoutput = document.getElementById("eta-output");
-    const prezzooutput = document.getElementById("prezzo-output");
-    const prezzoscontato = document.getElementById("prezzo-scontato-output");
-    const prezzototale = document.getElementById("prezzo-totale-output");
+// Get DOM elements
+const calculateButton = document.getElementById('calcola');
+const kmInput = document.getElementById('km');
+const etaInput = document.getElementById('eta');
+const kmOutput = document.getElementById('km-output');
+const prezzoOutput = document.getElementById('prezzo-output');
+const etaOutput = document.getElementById('eta-output');
+const prezzoTotaleOutput = document.getElementById('prezzo-totale-output');
 
+// Price per kilometer
+const PRICE_PER_KM = 0.21;
 
-    const prezzo = 0.21; // Prezzo al km
-    const sconto = 0.2; // Sconto del 20% per minorenni
-    const scontoOver65 = 0.4; // Sconto del 40% per over 65
+// Discount percentages
+const UNDER_18_DISCOUNT = 0.20;
+const OVER_65_DISCOUNT = 0.40;
 
+calculateButton.addEventListener('click', function() {
+    // Get input values
+    const km = parseFloat(kmInput.value);
+    const eta = parseInt(etaInput.value);
 
-    calcola.addEventListener("click", function () {
-        const kmValue = parseInt(km.value);
-        const etaValue = parseInt(eta.value);
+    // Calculate base price
+    const basePrice = km * PRICE_PER_KM;
 
-        if (isNaN(kmValue) || isNaN(etaValue)) {
-            alert("Inserisci valori validi per chilometri ed età.");
-            return;
-        }
+    // Calculate discount based on age
+    let discount = 0;
+    if (eta < 18) {
+        discount = UNDER_18_DISCOUNT;
+    } else if (eta >= 65) {
+        discount = OVER_65_DISCOUNT;
+    }
 
-        let prezzoTotale = kmValue * prezzo;
-        let scontoApplicato = 0;
+    // Calculate final price
+    const discountAmount = basePrice * discount;
+    const finalPrice = basePrice - discountAmount;
 
-        if (etaValue < 18) {
-            scontoApplicato = sconto;
-            prezzoTotale *= (1 - sconto);
-        } else if (etaValue > 65) {
-            scontoApplicato = scontoOver65;
-            prezzoTotale *= (1 - scontoOver65);
-        }
-
-        kmoutput.innerHTML = kmValue + " km";
-        etaoutput.innerHTML = etaValue + " anni";
-        // Calcolo del prezzo totale
-        prezzooutput.innerHTML = "€ " + (kmValue * prezzo).toFixed(2);
-        prezzoscontato.innerHTML = "€ " + (kmValue * prezzo * (1 - scontoApplicato)).toFixed(2);
-        prezzototale.innerHTML = "€ " + prezzoTotale.toFixed(2);
-
-        risultato.style.display = "block";
-    });
+    // Display results
+    kmOutput.textContent = km;
+    etaOutput.textContent = eta;
+    prezzoOutput.textContent = basePrice.toFixed(2) + '€';
+    prezzoTotaleOutput.textContent = finalPrice.toFixed(2) + '€';
 });
